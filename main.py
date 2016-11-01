@@ -4,6 +4,9 @@ from werkzeug.wrappers import Request, Response
 def application(request):
     return Response('Hello World!')
 
-if __name__ == '__main__':
+def run(host, port, funct):
     from werkzeug.serving import run_simple
-    run_simple('localhost', 4000, application)
+    run_simple(host, port, funct)
+
+if __name__ == '__main__':
+    run('localhost', 4000, application)
