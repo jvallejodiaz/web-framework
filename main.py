@@ -1,5 +1,7 @@
 from werkzeug.wrappers import Request, Response
 
+_request_stack = werkzeug.local.LocalStack()
+
 @Request.application
 def application(request):
     return Response('Hello World!')
