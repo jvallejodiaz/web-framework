@@ -1,9 +1,14 @@
 import os
 import werkzeug
-from werkzeug.wrappers import Request, Response
+from werkzeug.wrappers import Request as RequestBase, Response
 from werkzeug.exceptions import HTTPException, NotFound
 from werkzeug.wsgi import SharedDataMiddleware
 from werkzeug.routing import Map, Rule
+
+
+class Request(RequestBase):
+    def __init__(self, *args, **kwargs):
+        super(Request, self).__init__(*args, **kwargs)
 
 
 class App(object):
@@ -11,12 +16,14 @@ class App(object):
     def __init__(self):
         self.url_map = Map()
         self.rule = Rule
+        self.endpoints = {}
+
 
     def dispatch_request(self, request):
         adapter = self.url_map.bind_to_environ(request.environ)
         try:
             endpoint, values = adapter.match()
-            return globals()[endpoint](request, **values)
+            return self.endpoints[endpoint].dispatch_request()
         except HTTPException, e:
             return e
 
@@ -29,17 +36,33 @@ class App(object):
         return self.wsgi_app(environ, start_response)
 
     def route(self, route, **options):
+
         def decorator(f):
-            endpoint = options.pop('endpoint', None)
-            rule = self.rule(route, endpoint=f.func_name,**options)
+            endpoint = f.__name__
+            rule = self.rule(route, endpoint=endpoint)
             self.url_map.add(rule)
+            self.endpoints[endpoint] = f
             return f
         return decorator
+
+
+
 app = App()
 
-@app.route('/hello_world', endpoint='hello_world')
-def hello_world(self):
-    return Response('Hello World')
+class EndPointType(type):
+    def __init__(cls, name, bases, attrs):
+        super(EndPointType, cls).__init__(name, bases, attrs)
+
+class EndPoint(object):
+    __metaclass__ = EndPointType
+
+    @classmethod
+    def dispatch_request(name=None):
+        return Response('Hello World')
+
+@app.route('/hello_world', endpoint='HelloWorld')
+class HelloWorld(EndPoint):
+    _name = "HelloWorld"
 
 def create_app(redis_host='localhost', redis_port=6379, with_static=True):
     if with_static:
