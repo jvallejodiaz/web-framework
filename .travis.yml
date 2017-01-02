@@ -14,6 +14,6 @@ install:
   - "pip install werkzeug"
   - "python setup.py -q install"
 # command to run tests
-script: coverage run --source=box tests/unit_test/base_test.py 
+script: coverage run --source=box,werkzeug tests/unit_test/base_test.py 
 after_success:
   coveralls
