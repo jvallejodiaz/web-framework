@@ -24,7 +24,7 @@ class App(object):
         try:
             endpoint, values = adapter.match()
             return self.endpoints[endpoint].dispatch_request()
-        except HTTPException, e:
+        except HTTPException as e:
             return e
 
     def wsgi_app(self, environ, start_response):
