@@ -11,7 +11,7 @@ python:
   - "nightly" # currently points to 3.7-dev
 # command to install dependencies
 install:
-  - "pip install box"
   - "pip install werkzeug"
+  - "python setup.py -q install"
 # command to run tests
 script: python tests/unit_test/base_test.py 
