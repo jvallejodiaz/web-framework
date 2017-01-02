@@ -10,7 +10,10 @@ python:
   - "nightly"
 # command to install dependencies
 install:
+  - "pip install coveralls"
   - "pip install werkzeug"
   - "python setup.py -q install"
 # command to run tests
-script: python tests/unit_test/base_test.py 
+script: run coverage --source=box tests/unit_test/base_test.py 
+after_success:
+  coveralls
