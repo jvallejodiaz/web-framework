@@ -7,6 +7,7 @@ from werkzeug.routing import Map, Rule
 
 
 class Request(RequestBase):
+
     def __init__(self, *args, **kwargs):
         super(Request, self).__init__(*args, **kwargs)
 
