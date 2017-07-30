@@ -1,0 +1,11 @@
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/box/__init__.py
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/box/__init__.pyc
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/box/main.py
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/box/main.pyc
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/EGG-INFO/dependency_links.txt
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/EGG-INFO/not-zip-safe
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/EGG-INFO/PKG-INFO
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/EGG-INFO/SOURCES.txt
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/EGG-INFO/top_level.txt
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/tests/__init__.py
+/Library/Python/2.7/site-packages/box-0.0.1-py2.7.egg/tests/__init__.pyc

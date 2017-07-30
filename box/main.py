@@ -13,18 +13,34 @@ class Request(RequestBase):
 
 
 class App(object):
+    """
+    App object is the central object that implements WSGI application
+    and it is where all the endpoints are registered. You can create a app
+    like this:
+
+    from box.main import app
+
+    You can use app in order to register new endpoints to your WSGI
+    application as follows:
+
+    from main.box import app, EndPoint
+
+    @app.route('/', endpoint='Index')
+    class Index(EndPoint):
+        _name="Index"
+
+    """
 
     def __init__(self):
         self.url_map = Map()
         self.rule = Rule
         self.endpoints = {}
 
-
     def dispatch_request(self, request):
         adapter = self.url_map.bind_to_environ(request.environ)
         try:
             endpoint, values = adapter.match()
-            return self.endpoints[endpoint].dispatch_request()
+            return endpoint.dispatch_request()
         except HTTPException as e:
             return e
 
@@ -36,17 +52,21 @@ class App(object):
     def __call__(self, environ, start_response):
         return self.wsgi_app(environ, start_response)
 
-    def route(self, route, **options):
+    def route(self, route, endpoint=None, **options):
+        """
+        This decorator function is used to register a url for a endpoint
+        class.
 
+        :param route: URL assigned to a endpoint.
+        :param options: others options to consider in the endpoint.
+        """
         def decorator(f):
-            endpoint = f.__name__
+            endpoint = f
             rule = self.rule(route, endpoint=endpoint)
             self.url_map.add(rule)
             self.endpoints[endpoint] = f
             return f
         return decorator
-
-
 
 app = App()
 
@@ -59,11 +79,7 @@ class EndPoint(object):
 
     @classmethod
     def dispatch_request(name=None):
-        return Response('Hello World')
-
-@app.route('/hello_world', endpoint='HelloWorld')
-class HelloWorld(EndPoint):
-    _name = "HelloWorld"
+        return Response()
 
 def create_app(redis_host='localhost', redis_port=6379, with_static=True):
     if with_static:
